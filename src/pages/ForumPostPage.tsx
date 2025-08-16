@@ -31,7 +31,7 @@ const ForumPostPage = () => {
       const { data: postData, error: postError } = await supabase
         .from('forum_posts')
         .select('*, author:profiles!author_id(*)')
-        .eq('id', postId)
+        .eq('id', Number(postId))
         .single();
       if (postError) throw postError;
       setPost(postData as ForumPost);
@@ -40,7 +40,7 @@ const ForumPostPage = () => {
       const { data: repliesData, error: repliesError } = await supabase
         .from('forum_replies')
         .select('*, author:profiles!author_id(*)')
-        .eq('post_id', postId)
+        .eq('post_id', Number(postId))
         .order('created_at', { ascending: true });
       if (repliesError) throw repliesError;
       setReplies(repliesData as ForumReply[]);
@@ -95,11 +95,13 @@ const ForumPostPage = () => {
           <div className="flex items-start gap-4 mb-4">
             <Avatar>
               <AvatarImage src={post.author?.avatar_url || undefined} />
-              <AvatarFallback>{post.author?.username?.[0].toUpperCase()}</AvatarFallback>
+              <AvatarFallback>{post.author?.username?.[0]?.toUpperCase() ?? 'U'}</AvatarFallback>
+
             </Avatar>
             <div>
               <p className="font-semibold text-foreground flex items-center gap-1">{post.author?.username} {post.author?.id === 'a411824a-455b-454d-853b-6840c92de036' && <Crown className="w-4 h-4 text-yellow-400" />}</p>
-              <p className="text-xs text-muted-foreground">{formatDistanceToNow(new Date(post.created_at), { addSuffix: true, locale: ptBR })}</p>
+              <p className="text-xs text-muted-foreground">{post.created_at && formatDistanceToNow(new Date(post.created_at), { addSuffix: true, locale: ptBR })}
+              </p>
             </div>
           </div>
           <h1 className="font-cinzel-decorative text-3xl font-bold text-primary mb-4">{post.title}</h1>
@@ -113,11 +115,12 @@ const ForumPostPage = () => {
               <div className="flex items-start gap-4 mb-3">
                 <Avatar className="w-8 h-8">
                   <AvatarImage src={reply.author?.avatar_url || undefined} />
-                  <AvatarFallback>{reply.author?.username?.[0].toUpperCase()}</AvatarFallback>
+                  <AvatarFallback>{reply.author?.username?.[0].toUpperCase() ?? 'U'}</AvatarFallback>
                 </Avatar>
                 <div>
                   <p className="text-sm font-semibold text-foreground flex items-center gap-1">{reply.author?.username} {reply.author?.id === 'a411824a-455b-454d-853b-6840c92de036' && <Crown className="w-4 h-4 text-yellow-400" />}</p>
-                  <p className="text-xs text-muted-foreground">{formatDistanceToNow(new Date(reply.created_at), { addSuffix: true, locale: ptBR })}</p>
+                  <p className="text-xs text-muted-foreground">{post.created_at && formatDistanceToNow(new Date(post.created_at), { addSuffix: true, locale: ptBR })}
+</p>
                 </div>
               </div>
               <p className="font-inter text-muted-foreground whitespace-pre-wrap">{reply.content}</p>
