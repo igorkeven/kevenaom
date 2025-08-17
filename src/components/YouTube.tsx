@@ -25,13 +25,13 @@ const YouTubeSection = () => {
   const stats = [
     {
       icon: Users,
-      value: "125K+",
+      value: "5K+",
       label: "Inscritos",
       color: "text-red-500"
     },
     {
       icon: Eye,
-      value: "2.5M+",
+      value: "700K+",
       label: "Visualizações",
       color: "text-primary"
     },
@@ -43,7 +43,7 @@ const YouTubeSection = () => {
     },
     {
       icon: Play,
-      value: "350+",
+      value: "972+",
       label: "Vídeos",
       color: "text-accent"
     }
@@ -152,7 +152,7 @@ const YouTubeSection = () => {
                 Junte-se à Comunidade Épica
               </h3>
               <p className="font-inter text-muted-foreground mb-6">
-                Mais de 125.000 guerreiros já seguem as lições dos deuses. 
+                Mais de 5.000 guerreiros já seguem as lições dos deuses. 
                 Não perca nenhuma estratégia e seja notificado sobre novos conteúdos épicos!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">

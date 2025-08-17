@@ -1,12 +1,14 @@
-import { Youtube, Twitter, Twitch, Disc } from 'lucide-react';
+import { SiDiscord, SiX , SiWhatsapp, SiYoutube, SiTwitch, SiInstagram} from 'react-icons/si';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const socialLinks = [
-    { icon: Youtube, href: 'https://www.youtube.com/@kevenaom', name: 'YouTube' },
-    { icon: Twitch, href: '#', name: 'Twitch' }, // ATUALIZE O LINK
-    { icon: Twitter, href: '#', name: 'Twitter' }, // ATUALIZE O LINK
-    { icon: Disc, href: '#', name: 'Discord' }, // ATUALIZE O LINK
+    { icon: SiYoutube,     href: 'https://www.youtube.com/@kevenaom',           name: 'YouTube',   classes: 'text-[#FF0000]/70 hover:text-[#FF0000]' },
+    { icon: SiTwitch,      href: '#',                                           name: 'Twitch',    classes: 'text-[#6441A5]/70 hover:text-[#6441A5]' },
+    { icon: SiWhatsapp,href: 'https://chat.whatsapp.com/JSO45TrgtdGErgg2wy8gvt', name: 'WhatsApp',  classes: 'text-[#25D366]/70 hover:text-[#25D366]' },
+    { icon: SiDiscord,        href: 'https://discord.com/invite/ZH6szAeYhz',       name: 'Discord',   classes: 'text-[#5865F2]/70 hover:text-[#5865F2]' },
+    { icon: SiInstagram,   href: 'https://www.instagram.com/kevenaombr/',       name: 'Instagram', classes: 'text-[#E1306C]/70 hover:text-[#E1306C]' },
+    { icon: SiX,     href: '#',                                           name: 'Twitter',   classes: 'text-[#1DA1F2]/70 hover:text-[#1DA1F2]' },
   ];
 
   const navLinks = [
@@ -53,7 +55,15 @@ const Footer = () => {
             <h3 className="font-cinzel text-lg font-semibold text-foreground mb-4">Siga a Lenda</h3>
             <div className="flex justify-center md:justify-start gap-4">
               {socialLinks.map(social => (
-                <a key={social.name} href={social.href} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.name}
+                  
+                  className={`transition-all duration-200 hover:scale-110 ${social.classes}`}
+                >
                   <social.icon className="w-6 h-6" />
                   <span className="sr-only">{social.name}</span>
                 </a>

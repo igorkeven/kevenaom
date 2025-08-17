@@ -55,7 +55,7 @@ const Hero = () => {
             <div className="text-center">
               <div className="bg-card/80 backdrop-blur-sm border border-primary/20 rounded-lg p-4 shadow-epic">
                 <div className="text-2xl md:text-3xl font-cinzel-decorative font-bold text-primary mb-1">
-                  100K+
+                  5K+
                 </div>
                 <div className="text-sm text-muted-foreground font-inter">
                   Inscritos
@@ -75,7 +75,7 @@ const Hero = () => {
             <div className="text-center">
               <div className="bg-card/80 backdrop-blur-sm border border-primary/20 rounded-lg p-4 shadow-epic">
                 <div className="text-2xl md:text-3xl font-cinzel-decorative font-bold text-primary mb-1">
-                  TOP 5
+                  TOP 10
                 </div>
                 <div className="text-sm text-muted-foreground font-inter">
                   Mundial

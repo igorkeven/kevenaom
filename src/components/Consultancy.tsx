@@ -3,8 +3,43 @@ import { Card } from "@/components/ui/card";
 import { Zap, Check, BrainCircuit, Target, TrendingUp, Map, MousePointerClick } from "lucide-react";
 
 const Consultancy = () => {
+  // seu número WhatsApp (DDI+DDD+numero, só dígitos)
+  const WHATSAPP = "5599999999999";
+
+  // mensagens diferentes por plano
+  const makeWaLink = (slug: string) => {
+    let text = "";
+
+    if (slug === "analise") {
+      text =
+        `Olá! Vim do site Keven AOM e quero **Análise de Replay**.\n` +
+        `Nick: ______\n` +
+        `Civilização: ______  |  Elo/MMR: ______\n` +
+        `Link/arquivo do replay: ______\n` +
+        `Pontos que quero focar: ______`;
+    } else if (slug === "sessao") {
+      text =
+        `Olá! Vim do site Keven AOM e quero **Sessão Ao Vivo (1h)**.\n` +
+        `Nick: ______  |  Elo/MMR: ______\n` +
+        `Disponibilidade (dias/horários): ______\n` +
+        `Discord: ______\n` +
+        `Objetivos principais: ______`;
+    } else if (slug === "mestre") {
+      text =
+        `Olá! Vim do site Keven AOM e quero o **Pacote Mestre** (4 sessões + análises).\n` +
+        `Nick: ______  |  Elo/MMR: ______\n` +
+        `Disponibilidade: ______\n` +
+        `Objetivos no mês: ______`;
+    } else {
+      text = `Olá! Vim do site Keven AOM e quero saber mais sobre consultoria.`;
+    }
+
+    return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
+  };
+
   const plans = [
     {
+      slug: "analise",
       title: "Análise de Replay",
       price: "R$ 49",
       description: "Uma análise técnica e detalhada de uma de suas partidas para identificar erros críticos e oportunidades de melhoria.",
@@ -14,9 +49,10 @@ const Consultancy = () => {
         "Sugestões de build orders alternativas",
       ],
       cta: "Analisar meu Replay",
-      variant: "warrior"
+      variant: "warrior" as const,
     },
     {
+      slug: "sessao",
       title: "Sessão Ao Vivo",
       price: "R$ 99",
       description: "Uma hora de treinamento individual e focado em suas maiores dificuldades para uma evolução acelerada.",
@@ -27,10 +63,11 @@ const Consultancy = () => {
         "Gravação da aula para rever depois",
       ],
       cta: "Agendar Sessão",
-      variant: "divine",
+      variant: "divine" as const,
       popular: true,
     },
     {
+      slug: "mestre",
       title: "Pacote Mestre",
       price: "R$ 249",
       description: "O plano definitivo para quem busca consistência e um lugar nos rankings mais altos do jogo.",
@@ -41,7 +78,7 @@ const Consultancy = () => {
         "Acesso direto via WhatsApp para dúvidas",
       ],
       cta: "Tornar-se Mestre",
-      variant: "heroic"
+      variant: "heroic" as const,
     }
   ];
 
@@ -63,22 +100,22 @@ const Consultancy = () => {
               CONSULTORIA ÉPICA
             </span>
           </div>
-          
+
           <h2 className="font-cinzel-decorative text-4xl md:text-5xl font-bold text-foreground mb-6">
             Eleve seu Jogo ao Nível <span className="text-transparent bg-gradient-divine bg-clip-text">Divino</span>
           </h2>
-          
+
           <p className="font-inter text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Cansado de perder para as mesmas táticas? Quer acelerar sua evolução e dominar seus oponentes? 
-            Aprenda diretamente com o Top 1 do mundo e descubra os segredos que ninguém te conta.
+            Aprenda diretamente com o Top 10 do mundo e descubra os segredos que ninguém te conta.
           </p>
         </div>
 
         {/* Pricing/Plans Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {plans.map((plan, index) => (
-            <Card 
-              key={index}
+          {plans.map((plan) => (
+            <Card
+              key={plan.slug}
               className={`bg-gradient-card border-primary/20 shadow-epic p-8 flex flex-col transition-all duration-300 hover:shadow-divine hover:-translate-y-2 relative ${plan.popular ? 'border-primary shadow-divine' : ''}`}
             >
               {plan.popular && (
@@ -88,44 +125,50 @@ const Consultancy = () => {
                   </div>
                 </div>
               )}
+
               <div className="flex-grow pt-4">
                 <h3 className="font-cinzel-decorative text-2xl font-bold text-primary text-center mb-2">{plan.title}</h3>
                 <p className="font-cinzel text-4xl font-bold text-foreground text-center mb-4">{plan.price}</p>
                 <p className="font-inter text-sm text-muted-foreground text-center mb-8 h-16">{plan.description}</p>
-                
+
                 <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature, fIndex) => (
-                    <li key={fIndex} className="flex items-start gap-3">
+                  {plan.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-3">
                       <Check className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
                       <span className="font-inter text-muted-foreground">{feature}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-              
-              <Button variant={plan.variant as any} size="lg" className="w-full mt-auto">
-                {plan.cta}
+
+              {/* Botão que abre o WhatsApp com a mensagem do plano */}
+              <Button variant={plan.variant} size="lg" className="w-full mt-auto" asChild>
+                <a href={makeWaLink(plan.slug)} target="_blank" rel="noopener noreferrer" aria-label={plan.cta}>
+                  {plan.cta}
+                </a>
               </Button>
             </Card>
           ))}
         </div>
 
-        {/* What you will master section */}
+        {/* What you will master */}
         <div className="max-w-4xl mx-auto mt-24 text-center">
-            <h3 className="font-cinzel-decorative text-3xl font-bold text-foreground mb-12">O Que Você Vai <span className="text-transparent bg-gradient-divine bg-clip-text">Dominar</span></h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                {skills.map((skill) => {
-                    const Icon = skill.icon;
-                    return (
-                        <div key={skill.label} className="flex flex-col items-center gap-3 group">
-                            <div className="w-20 h-20 bg-card/80 backdrop-blur-sm border border-primary/20 rounded-full flex items-center justify-center shadow-epic group-hover:bg-primary/10 transition-all duration-300">
-                                <Icon className="w-10 h-10 text-primary group-hover:scale-110 transition-transform"/>
-                            </div>
-                            <span className="font-cinzel font-semibold text-foreground text-center">{skill.label}</span>
-                        </div>
-                    )
-                })}
-            </div>
+          <h3 className="font-cinzel-decorative text-3xl font-bold text-foreground mb-12">
+            O Que Você Vai <span className="text-transparent bg-gradient-divine bg-clip-text">Dominar</span>
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {skills.map((skill) => {
+              const Icon = skill.icon;
+              return (
+                <div key={skill.label} className="flex flex-col items-center gap-3 group">
+                  <div className="w-20 h-20 bg-card/80 backdrop-blur-sm border border-primary/20 rounded-full flex items-center justify-center shadow-epic group-hover:bg-primary/10 transition-all duration-300">
+                    <Icon className="w-10 h-10 text-primary group-hover:scale-110 transition-transform"/>
+                  </div>
+                  <span className="font-cinzel font-semibold text-foreground text-center">{skill.label}</span>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
     </section>

@@ -6,7 +6,7 @@ const About = () => {
   const achievements = [
     {
       icon: Trophy,
-      title: "Top 5 Mundial",
+      title: "Top 10 Mundial",
       description: "Classificado como um dos melhores jogadores de AoM: Retold no mundo"
     },
     {
